@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ posts['title'] }}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/post.css') }}">
+</head>
+<body>
+    <!-- Entire Post Page with Border -->
+    <div class="post-page-container">
+        <div class="post-detail">
+            <!-- Post Container Box -->
+            <div class="post-container">
+                <h1>{{ posts['title'] }}</h1>
+
+                <!-- Image Box -->
+                <div class="image-box">
+                    <img src="{{ url_for('static', filename=posts['img']) }}" alt="Post Image" class="post-image">
+                </div>
+
+                <!-- Content Box -->
+                <div class="content-box">
+                    <div class="post-body">
+                        <p>{{ posts['postbody'] }}</p>
+                    </div>
+                </div>
+
+                <!-- Back Link Box -->
+                <div class="back-link-box">
+                    <a href="/" class="back-link">Back to Homepage</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/script.js"></script>
+</body>
+</html>

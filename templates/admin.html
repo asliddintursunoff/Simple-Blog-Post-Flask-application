@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create New Post</title>
+    <link rel="stylesheet" href="{{url_for('static', filename='css/admin.css')}}">
+</head>
+<body>
+    <div class="admin-container">
+        <h1 class="admin-title">Create New Post</h1>
+
+        {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            {% for category, message in messages %}
+                <div class="flash-message {{ category }}">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endif %}
+        {% endwith %}
+        
+        <!-- Form to create new post -->
+        <form id="createPostForm" method="POST" action="#" enctype="multipart/form-data">
+            <div class="form-group">
+                <label for="postImage">Choose an Image:</label>
+                <input type="file" id="postImage" name="img" accept="image/*" required>
+            </div>
+
+            <div class="form-group">
+                <label for="postTitle">Post Title:</label>
+                <input type="text" id="postTitle" name="title" placeholder="Post Title" required>
+            </div>
+
+            <div class="form-group">
+                <label for="postBody">Post Body:</label>
+                <textarea id="postBody" name="postbody" placeholder="Write your post here..." required></textarea>
+            </div>
+
+            <button type="submit" class="submit-btn">Create Post</button>
+        </form>
+
+        <a href="/" class="back-link">Back to Homepage</a>
+    </div>
+
+    <script src="js/script.js"></script>
+</body>
+</html>

@@ -1,0 +1,77 @@
+/* General Styles */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background-color: #f4f4f4;
+    font-family: 'Arial', sans-serif;
+}
+
+h1 {
+    font-size: 2rem;
+    color: #333;
+}
+
+/* Post Page Container with Border */
+.post-page-container {
+    max-width: 900px;
+    margin: 30px auto;
+    border: 3px solid #007bff; /* Blue border for the entire post */
+    border-radius: 8px;
+    padding: 20px;
+    background-color: #fff;
+}
+
+/* Post Container Box */
+.post-container {
+    padding: 20px;
+}
+
+/* Image Box */
+.image-box {
+    text-align: center;
+    margin-bottom: 20px;
+    background-color: #f9f9f9;
+    padding: 15px;
+    border-radius: 8px;
+}
+
+.post-image {
+    width: 100%;
+    height: auto;
+    border-radius: 12px;
+    object-fit: contain;
+    max-width: 100%;
+}
+
+/* Content Box */
+.content-box {
+    background-color: #fafafa;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+}
+
+.post-body {
+    color: #555;
+    line-height: 1.6;
+}
+
+/* Back Link Box */
+.back-link-box {
+    margin-top: 30px;
+    text-align: center;
+}
+
+.back-link {
+    color: #007bff;
+    font-size: 1.1rem;
+    text-decoration: none;
+}
+
+.back-link:hover {
+    text-decoration: underline;
+}
