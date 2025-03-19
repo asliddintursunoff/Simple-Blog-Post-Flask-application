@@ -5,6 +5,174 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Blog Homepage</title>
     <link rel="stylesheet" href="css/styles.css">
+    <style>
+        /* General Styles */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+
+        .homepage {
+            display: flex;
+            max-width: 1200px;
+            margin: 20px auto;
+            gap: 20px;
+        }
+
+        /* Flash Messages */
+        .flash-message {
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 5px;
+            text-align: center;
+        }
+
+        .success { background: #4CAF50; color: white; }
+        .error { background: #f44336; color: white; }
+
+        /* Admin Link */
+        .admin-link {
+            display: block;
+            text-align: right;
+            padding: 10px 20px;
+            font-weight: bold;
+            color: #333;
+        }
+
+        /* Main Content */
+        .main-content {
+            flex: 2;
+        }
+
+        .main-title {
+            text-align: center;
+            color: #333;
+        }
+
+        /* Blog Post Grid */
+        .posts-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+        }
+
+        .post-card {
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .post-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .post-image {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+        }
+
+        .post-info {
+            padding: 15px;
+        }
+
+        .post-title a {
+            text-decoration: none;
+            font-size: 18px;
+            color: #333;
+            font-weight: bold;
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        .post-title a:hover {
+            color: #007BFF;
+        }
+
+        .post-description {
+            font-size: 14px;
+            color: #666;
+        }
+
+        .read-more-btn {
+            display: inline-block;
+            margin-top: 10px;
+            padding: 8px 15px;
+            background: #007BFF;
+            color: white;
+            border-radius: 4px;
+            text-decoration: none;
+            transition: 0.3s;
+        }
+
+        .read-more-btn:hover {
+            background: #0056b3;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            flex: 1;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .sidebar-title {
+            text-align: center;
+            color: #333;
+            margin-bottom: 15px;
+        }
+
+        .sidebar-posts {
+            list-style: none;
+            padding: 0;
+        }
+
+        .sidebar-posts li {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+            padding: 5px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .sidebar-posts li:last-child {
+            border-bottom: none;
+        }
+
+        .sidebar-thumbnail {
+            width: 40px;
+            height: 40px;
+            border-radius: 4px;
+            margin-right: 10px;
+        }
+
+        .sidebar-posts a {
+            text-decoration: none;
+            color: #333;
+            font-size: 14px;
+        }
+
+        .sidebar-posts a:hover {
+            color: #007BFF;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .homepage {
+                flex-direction: column;
+            }
+
+            .posts-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
 </head>
 <body>
     
@@ -17,49 +185,51 @@
         {% endfor %}
     {% endif %}
     {% endwith %}
-   <a href="/admin" class="admin-link">Admin</a>
+
+    <a href="/admin" class="admin-link">Post qo'shish</a>
+
     <div class="homepage">
         <!-- Main Content Area -->
         <div class="main-content">
             <h1 class="main-title">Latest Posts</h1>
-            
+
             <!-- Blog Posts Grid -->
             <div class="posts-grid">
                 {% for info in data %}
                 <div class="post-card">
-                    <img src="{{info['img']}}" alt="{{info['title']}}" class="post-image">
+                    <img src="{{ info['img'] }}" alt="{{ info['title'] }}" class="post-image">
                     <div class="post-info">
-                        {% if info['title'] | length > 100 %}
-                        <h2 class="post-title"><a href="{{ url_for('post', id=info['id']) }}">{{ info['title'][:100] }}</a></h2>
-                        {% else%}
-                        <h2 class="post-title"><a href="{{ url_for('post', id=info['id']) }}">{{ info['title'] }}</a></h2>
-                        {%endif%}
+                        <h2 class="post-title">
+                            <a href="{{ url_for('post', id=info['id']) }}">
+                                {{ info['title'][:100] if info['title'] | length > 100 else info['title'] }}
+                            </a>
+                        </h2>
 
                         <p class="post-description">{{ info['postbody'][:150] }}...</p>
                         <a href="{{ url_for('post', id=info['id']) }}" class="read-more-btn">Read More</a>
-                        <h2 class="post-title"><a href="{{ url_for('edit_post', id=info['id']) }}">edit</a></h2>
+                        <h2 class="post-title">
+                            <a href="{{ url_for('edit_post', id=info['id']) }}">Edit</a>
+                        </h2>
                     </div>
                 </div>
                 {% endfor %}
             </div>
         </div>
 
-       <!-- Sidebar for Latest Posts with Images -->
-<div class="sidebar">
-    <h2 class="sidebar-title">Recent Posts</h2>
-    <ul class="sidebar-posts">
-        {% for info in data[:8] %}
-        <li>
-            <a href="{{ url_for('post', id=info['id']) }}">
-                <img src="{{info['img']}}" alt="{{info['title']}}" class="sidebar-thumbnail">
-                {{info['title'][:30]}}
-            </a>
-        </li>
-        {% endfor %}
-        <!-- Add more posts dynamically here -->
-    </ul>
-</div>
-
+        <!-- Sidebar for Latest Posts with Images -->
+        <div class="sidebar">
+            <h2 class="sidebar-title">Recent Posts</h2>
+            <ul class="sidebar-posts">
+                {% for info in data[:8] %}
+                <li>
+                    <a href="{{ url_for('post', id=info['id']) }}">
+                        <img src="{{ info['img'] }}" alt="{{ info['title'] }}" class="sidebar-thumbnail">
+                        {{ info['title'][:30] }}
+                    </a>
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
     </div>
 
     <script src="js/script.js"></script>

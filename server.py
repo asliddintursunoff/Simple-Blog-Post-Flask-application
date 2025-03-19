@@ -34,11 +34,17 @@ def create_post():
 
 @app.route('/<int:id>' , methods=['GET', 'PUT','POST'])
 def edit_post(id):
+    obj = adding_id(lst)[id]
+    
+    if obj is None:
+        flash('Post not found')
+        return redirect('/')
     for value in  adding_id(lst):
         if value['id']==id:
             render_template('editing.html')
         
             if request.method == "POST":
+                    
                     title = request.form['title']
                     postbody = request.form['postbody']
                     img = request.files['img']
@@ -47,11 +53,13 @@ def edit_post(id):
                     value['postbody'] = postbody
                     value['img'] = f"images/{img.filename}"
                     flash('Post updated successfully')
+                    
                     return redirect('/')
             else:
+                
                 flash( 'Post not found')
-         
-    return render_template('editing.html')
+    obj = {str(k): v for k, v in obj.items()}
+    return render_template('editing.html',data =obj )
 @app.route("/post/<int:id>")
 def post(id):
     ids = adding_id(lst)
